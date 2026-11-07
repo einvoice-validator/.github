@@ -22,17 +22,19 @@
 European e-invoices are checked against business rules that CEN (EN 16931) and OpenPeppol (Peppol BIS Billing 3.0) publish as Schematron, which validators run compiled to XSLT 2.0. einvoice-validator is an XSLT 2.0 and XPath 2.0 engine in **pure Rust** (no JVM, no C library, no FFI) built to run those **official stylesheets unchanged**, with exact `xs:decimal` arithmetic, and to give the same report as Saxon-HE, rule by rule.
 
 > [!IMPORTANT]
-> **Pre-alpha: it does not validate invoices yet.** The XPath 2.0 parser, the XSLT loader, the atomic values with exact decimals and the CEN UBL 1.3.17 test corpus exist; the evaluator, the XSLT executor and UBL schema validation are in progress. Follow the [tracking issues](https://github.com/einvoice-validator/einvoice-validator/issues).
+> **Pre-alpha: not usable as a validator yet.** There is no release, no public API and no command-line tool. The engine already runs the official CEN EN 16931 UBL 1.3.17 stylesheet and writes the same SVRL report as Saxon-HE 12.10 on all 1179 cases of its test corpus, and UBL 2.1 schema validation works in Rust. Still open: the public API and command-line tool (in progress), Peppol BIS Billing 3.0.22, a WebAssembly build. Follow the [tracking issues](https://github.com/einvoice-validator/einvoice-validator/issues).
 
 | | Project | What it is |
 |---|---|---|
-| 🧾 | [**einvoice-validator**](https://github.com/einvoice-validator/einvoice-validator) | The Cargo workspace: XPath 2.0 parser (`einvoice-xpath`), atomic values (`einvoice-xdm`), XSLT loader (`einvoice-xslt`), the vendored official artefacts and the test corpus with its Saxon-HE results. |
+| 🧾 | [**einvoice-validator**](https://github.com/einvoice-validator/einvoice-validator) | The Cargo workspace: XPath 2.0 parser (`einvoice-xpath`), atomic values (`einvoice-xdm`), evaluator (`einvoice-xpath-eval`), XSLT loader (`einvoice-xslt`) and executor (`einvoice-xslt-exec`), UBL 2.1 schema validation (`einvoice-xsd`), the vendored official artefacts and the test corpus with its Saxon-HE results. |
 | 🌐 | [**einvoice-validator.github.io**](https://github.com/einvoice-validator/einvoice-validator.github.io) | The website. |
 
 #### Why trust it
 
 - **Official artefacts, not a rewrite.** No rule is translated into Rust by hand: the engine is built to execute the published stylesheets. The CEN artefacts are vendored byte for byte with their checksums, and an instruction outside the supported XSLT subset is refused when the stylesheet is loaded.
-- **Reference results from Saxon-HE.** 1179 cases from the official CEN UBL 1.3.17 test files, each with the report Saxon-HE 9.9.1-8 gives, re-run in CI and cross-checked against the expectations of the official unit tests (0 disagreements). The atomic-value operations already match Saxon-HE on over 5000 test cases.
+- **Same reports as Saxon-HE.** 1179 cases from the official CEN UBL 1.3.17 test files, each with the report Saxon-HE 12.10 gives, re-run in CI and cross-checked against the expectations of the official unit tests (0 disagreements). On every one of them, the engine's report is identical to Saxon's, rule by rule.
+- **Schema validation compared with xmllint** on 1546 cases; every difference is listed with its cause.
+- **Fast and small.** The whole CEN corpus takes about 0.5 s on one thread (0.4 ms per document), against about 1.4 s for Saxon-HE 12.10 on one thread, JVM start included; the prepared stylesheet keeps about 3.7 MiB of heap.
 - **Exact decimals.** `xs:decimal` is arbitrary precision, never a floating-point number.
 - **Strict engineering.** No `unsafe`, every warning and clippy `pedantic` denied, signed commits, GitHub Actions pinned by commit SHA, dependencies checked by `cargo-deny`.
 
