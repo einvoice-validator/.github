@@ -13,16 +13,18 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/einvoice-validator/einvoice-validator/releases/tag/v0.1.0"><img alt="Release v0.1.0" src="https://img.shields.io/github/v/release/einvoice-validator/einvoice-validator?style=flat-square&label=release&color=1c6b52"></a>
+  <a href="https://crates.io/crates/einvoice-validator"><img alt="crates.io" src="https://img.shields.io/crates/v/einvoice-validator?style=flat-square&label=crates.io&color=1c6b52"></a>
+  <a href="https://docs.rs/einvoice-validator"><img alt="docs.rs" src="https://img.shields.io/docsrs/einvoice-validator?style=flat-square&label=docs.rs"></a>
   <a href="https://github.com/einvoice-validator/einvoice-validator/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/einvoice-validator/einvoice-validator/ci.yml?branch=main&style=flat-square&label=ci"></a>
   <a href="https://github.com/einvoice-validator/einvoice-validator/blob/main/LICENSE"><img alt="MIT" src="https://img.shields.io/badge/license-MIT-1c6b52?style=flat-square"></a>
   <a href="https://github.com/einvoice-validator/einvoice-validator/blob/main/rust-toolchain.toml"><img alt="Rust 1.99.1" src="https://img.shields.io/badge/rust-1.99.1-1c6b52?style=flat-square&logo=rust"></a>
-  <a href="https://github.com/einvoice-validator/einvoice-validator/issues"><img alt="Status: pre-alpha" src="https://img.shields.io/badge/status-pre--alpha-1c6b52?style=flat-square"></a>
 </p>
 
 European e-invoices are checked against business rules that CEN (EN 16931) and OpenPeppol (Peppol BIS Billing 3.0) publish as Schematron, which validators run compiled to XSLT 2.0. einvoice-validator is a library and a command-line tool, `einvoice-validate`, in **pure Rust** (no JVM, no C library, no FFI): an XSLT 2.0 and XPath 2.0 engine that runs those **official stylesheets unchanged**, with exact `xs:decimal` arithmetic and UBL 2.1 schema validation, and gives the same report as Saxon-HE, rule by rule.
 
 > [!IMPORTANT]
-> **Pre-alpha, no release yet: usable from source.** Install the command-line tool from a clone with `cargo install --locked --path crates/einvoice-cli`, or depend on the library through Git; nothing is published on crates.io, and before 1.0 the API may change. CEN EN 16931 UBL 1.3.17 is built in; Peppol BIS Billing 3.0.22 is used as a bundle built locally from its pinned release, whose files are not redistributed. On every case of both test corpora, official and mutated, the reports are the same as Saxon-HE 12.10's. Still open: the first release, WebAssembly bindings and an npm package, other rule sets. See the [website](https://einvoice-validator.github.io/#use) and the [tracking issues](https://github.com/einvoice-validator/einvoice-validator/issues).
+> **0.1.0 released** ([release notes](https://github.com/einvoice-validator/einvoice-validator/releases/tag/v0.1.0)), still pre-1.0: a minor version may change the API. Install the command-line tool with `cargo install --locked einvoice-cli`; the library is [`einvoice-validator`](https://crates.io/crates/einvoice-validator) on crates.io (`einvoice-validator = "0.1"`), documented on [docs.rs](https://docs.rs/einvoice-validator). CEN EN 16931 UBL 1.3.17 is built in; Peppol BIS Billing 3.0.22 is used as a bundle built locally, in a clone of the repository, from its pinned release, whose files are not redistributed. On every case of both test corpora, official and mutated, the reports are the same as Saxon-HE 12.10's. Still open: WebAssembly bindings and an npm package, other rule sets. See the [website](https://einvoice-validator.github.io/#use) and the [tracking issues](https://github.com/einvoice-validator/einvoice-validator/issues).
 
 | | Project | What it is |
 |---|---|---|
